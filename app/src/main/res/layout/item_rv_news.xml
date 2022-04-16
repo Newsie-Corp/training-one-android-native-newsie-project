@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#dadada"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/tv_art_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title" />
+
+    <TextView
+        android:id="@+id/tv_art_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="author" />
+
+    <TextView
+        android:id="@+id/tv_art_short_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="short description" />
+
+    <TextView
+        android:id="@+id/tv_art_pa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="publised date" />
+
+    <TextView
+        android:id="@+id/tv_art_content_prev"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="content preview" />
+</LinearLayout>

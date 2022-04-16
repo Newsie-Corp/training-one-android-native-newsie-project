@@ -1,8 +1,10 @@
-package com.akv.newsie;
+package com.akv.newsie.Activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.akv.newsie.R;
 
 public class ReadLaterActivity extends AppCompatActivity {
 
