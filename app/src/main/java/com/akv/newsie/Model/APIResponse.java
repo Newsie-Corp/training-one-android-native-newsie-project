@@ -3,15 +3,17 @@ package com.akv.newsie.Model;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class Response {
+public class APIResponse {
+
+    private static final String TAG = "APIResponse";
 
     @SerializedName("totalResults")
     private int totalResults;
 
     @SerializedName("articles")
-    private List<ArticlesItem> articles;
+    private ArrayList<ArticlesItem> articles;
 
     @SerializedName("status")
     private String status;
@@ -24,11 +26,11 @@ public class Response {
         return totalResults;
     }
 
-    public void setArticles(List<ArticlesItem> articles) {
+    public void setArticles(ArrayList<ArticlesItem> articles) {
         this.articles = articles;
     }
 
-    public List<ArticlesItem> getArticles() {
+    public ArrayList<ArticlesItem> getArticles() {
         return articles;
     }
 
@@ -42,6 +44,6 @@ public class Response {
 
     @Override
     public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this, Response.class);
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this, APIResponse.class);
     }
 }

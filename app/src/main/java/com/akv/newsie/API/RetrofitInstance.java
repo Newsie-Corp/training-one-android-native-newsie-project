@@ -12,7 +12,7 @@ public class RetrofitInstance {
 
     public RetrofitInstance() {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(APIEndPoint.BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(APIEndPoint.NEWSAPI_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
         API = retrofit.create(APIEndPoint.class);
     }
 

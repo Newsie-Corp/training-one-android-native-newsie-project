@@ -6,40 +6,66 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.akv.newsie.API.APIEndPoint;
+import com.akv.newsie.API.RetrofitInstance;
 import com.akv.newsie.Adapter.ArticlesAdapter;
+import com.akv.newsie.Model.APIResponse;
 import com.akv.newsie.Model.ArticlesItem;
 import com.akv.newsie.R;
 import com.akv.newsie.Util.SessionManager;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
-    SessionManager sessionManager;
-    ArrayList<ArticlesItem> articles;
-    RecyclerView rvArticles;
-    ArticlesAdapter articlesAdapter;
-    ArrayList<ArticlesItem> articlesList, articlesListFiltered;
+    private SessionManager sessionManager;
+    private ArrayList<ArticlesItem> articles;
+    private RecyclerView rvArticles;
+    private ArticlesAdapter articlesAdapter;
+    private ArrayList<ArticlesItem> articlesList, articlesListFiltered;
     private static final String TAG = "MainActivity";
+    private RetrofitInstance retrofitInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        rvArticles = findViewById(R.id.rv_main_list);
         sessionManager = new SessionManager(this);
-
+        retrofitInstance = new RetrofitInstance();
         try {
-            articles = ArticlesItem.generateArticleList();
-            rvArticles = findViewById(R.id.rv_main_list);
-            articlesAdapter = new ArticlesAdapter(getApplicationContext(), articles);
-            rvArticles.setAdapter(articlesAdapter);
-            rvArticles.setLayoutManager(new LinearLayoutManager(this));
+
+//            articles = ArticlesItem.generateArticleList();
+            retrofitInstance.getAPI().getResponseByKeyword("Apple", APIEndPoint.NEWSAPI_API_KEY).enqueue(new Callback<APIResponse>() {
+                @Override
+                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                    Log.d(TAG, response.body().toString());
+                    articles = response.body().getArticles();
+                    if(articles.size()>0){
+                        initAdapter();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "No News Currently", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<APIResponse> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG, e.toString());
@@ -77,6 +103,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ab.show();
+    }
+
+    public void initAdapter() {
+
+        articlesAdapter = new ArticlesAdapter(getApplicationContext(), articles);
+
+        rvArticles.setAdapter(articlesAdapter);
+        rvArticles.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
     public void filterFunction(Menu menu) {

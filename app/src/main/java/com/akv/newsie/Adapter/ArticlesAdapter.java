@@ -1,6 +1,7 @@
 package com.akv.newsie.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.akv.newsie.Model.ArticlesItem;
 import com.akv.newsie.R;
+import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,6 +67,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         holder.artcilePublishedAt.setText(article.getPublishedAt());
         holder.articleContent.setText(article.getContent());
         holder.articleImage.setImageResource(R.drawable.newspaper_icon);
+        Glide.with(mRecyclerView).load(article.getUrlToImage()).into(holder.articleImage);
 
     }
 
@@ -111,10 +116,10 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
     @Override
     public Filter getFilter() {
-        return exampleFilter;
+        return articleFilter;
     }
 
-    private Filter exampleFilter = new Filter() {
+    private Filter articleFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence txt) {
@@ -166,5 +171,14 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
     };
 
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 }
