@@ -29,6 +29,18 @@ public class ArticlesItem {
     @SerializedName("content")
     private String content;
 
+    @SerializedName("content")
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
     }
