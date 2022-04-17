@@ -1,7 +1,6 @@
 package com.akv.newsie.Util;
 
 import android.app.Activity;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -36,6 +35,6 @@ public class SplashScreen extends Activity {
                 finish();
 
             }
-        },5000);
+        },2500);
     }
 }

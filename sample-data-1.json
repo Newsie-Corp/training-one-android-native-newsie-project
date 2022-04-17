@@ -1,0 +1,136 @@
+{
+    "status": "ok",
+    "totalResults": 10,
+    -"articles": [
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Mary Ann Azevedo",
+            "title": "Fintech Roundup: The gloves are off in the spend management space",
+            "description": "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
+            "url": "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
+            "publishedAt": "2022-04-17T14:03:06Z",
+            "content": "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Manish Singh",
+            "title": "Sequoia Capital India pledges to take proactive steps amid fraud allegations at some startups",
+            "description": "Sequoia Capital India, one of the most prolific and successful investors in India and Southeast Asia, addressed the fraudulent practices allegations levelled against some of its portfolio startups and pledged to take proactive steps to do more to drive increa…",
+            "url": "https://techcrunch.com/2022/04/17/sequoia-capital-india-pledges-to-take-proactive-steps-amid-fraud-allegations-at-some-startups/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2022/04/GettyImages-563374603-1.jpg?w=764",
+            "publishedAt": "2022-04-17T12:44:45Z",
+            "content": "Sequoia Capital India, one of the most prolific and successful investors in India and Southeast Asia, addressed the fraudulent practices allegations levelled against some of its portfolio startups an… [+3828 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Lucas Matney",
+            "title": "Metaverses grapple with Meta versus Apple",
+            "description": "Hello readers, and welcome back to Week in Review! Last week, I talked about Apple and crypto. This week, we’re talking about Apple clashing with Meta over their metaverse taxes. After sending out hundreds of these newsletters, next week will sadly be my last…",
+            "url": "https://techcrunch.com/2022/04/16/metaverses-grapple-with-meta-versus-apple/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2019/06/Mark-Zuckerberg-Tim-Cook.png?w=740",
+            "publishedAt": "2022-04-16T21:31:02Z",
+            "content": "Hello readers, and welcome back to Week in Review!\r\nLast week, I talked about Apple and crypto. This week, we’re talking about Apple clashing with Meta over their metaverse taxes.\r\nAfter sending out … [+6701 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Sarah Perez",
+            "title": "This Week in Apps: Elon bids for Twitter, WhatsApp adds Communities, Spotify goes 'Live'",
+            "description": "This Week in Apps, the weekly TechCrunch series that recaps the latest in mobile OS news, mobile applications and the overall app economy.",
+            "url": "https://techcrunch.com/2022/04/16/this-week-in-apps-elon-bids-for-twitter-whatsapp-adds-communities-spotify-goes-live/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2021/08/this-week-in-apps-splash-3.png?w=753",
+            "publishedAt": "2022-04-16T18:11:26Z",
+            "content": "Welcome back to This Week in Apps, the weekly TechCrunch series that recaps the latest in mobile OS news, mobile applications and the overall app economy.\r\nThe app industry continues to grow, with a … [+23007 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Natasha Mascarenhas",
+            "title": "We’re still in founder-friendly market, kind of",
+            "description": "The late-stage market has cooled down for tech companies but many early-stage investors say their portfolio companies aren’t too impacted because they’re years away from an exit and have enough capital to weather uncertainty.",
+            "url": "https://techcrunch.com/2022/04/16/founder-friendly-market/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2022/02/GettyImages-123491654-edit.jpg?w=711",
+            "publishedAt": "2022-04-16T18:05:54Z",
+            "content": "Welcome to Startups Weekly, a fresh human-first take on this weeks startup news and trends. To get this in your inbox, subscribe here.\r\nIve been thinking a lot about silos, or the lack thereof, withi… [+5664 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Alex Wilhelm",
+            "title": "What's the real argument in favor of Musk buying Twitter?",
+            "description": "What I am starting to view as the Thiel-Musk-Andreessen viewpoint is somewhat simple: Anything that impedes the ability of a select group of billionaires to do whatever they want is tyranny.",
+            "url": "https://techcrunch.com/2022/04/16/whats-the-real-argument-in-favor-of-musk-buying-twitter/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2020/06/NSussman_Techcrunch_Exchange-multicolor.jpg?w=533",
+            "publishedAt": "2022-04-16T17:00:00Z",
+            "content": "Welcome to The TechCrunch Exchange, a weekly startups-and-markets newsletter. Its inspired by the daily TechCrunch+ column where it gets its name. Want it in your inbox every Saturday? Sign up here. … [+4867 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Kirsten Korosec",
+            "title": "Meet the Zoox robotaxi alongside co-founder Jesse Levinson at TC Sessions: Mobility 2022",
+            "description": "In the 18 months since the Zoox robotaxi made its virtual debut, the custom-built vehicle has been largely under wraps. That is, until TC Sessions: Mobility 2022, a two-day in-person event scheduled for May 18 and May 19 in San Mateo. Co-founder and CTO Jesse…",
+            "url": "https://techcrunch.com/2022/04/16/meet-the-zoox-robotaxi-alongside-co-founder-jesse-levinson-at-tc-sessions-mobility-2022/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2022/04/mobility-2022-zoox.jpg?w=764",
+            "publishedAt": "2022-04-16T15:21:07Z",
+            "content": "In the 18 months since the Zoox robotaxi made its virtual debut, the custom-built vehicle has been largely under wraps. That is, until TC Sessions: Mobility 2022, a two-day in-person event scheduled … [+1866 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Devin Coldewey, Kyle Wiggers",
+            "title": "Deep Science: AI cuts, flows, and goes green",
+            "description": "TechCrunch's Deep Science column looks at the past week in scientific research. This edition touches on AI applied to recycling, among other topics.",
+            "url": "https://techcrunch.com/2022/04/16/deep-science-ai-cuts-flows-and-goes-green/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2020/10/GettyImages-1023943076.jpg?w=600",
+            "publishedAt": "2022-04-16T14:00:44Z",
+            "content": "Research in the field of machine learning and AI, now a key technology in practically every industry and company, is far too voluminous for anyone to read it all. This column aims to collect some of … [+7990 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Manish Singh",
+            "title": "Neobank Fi finalizing funding at $700 million valuation",
+            "description": "Indian neobank Fi is in advanced stages of talks to raise about $100 million at a $700 million valuation, according to three sources familiar with the matter. Alpha Wave Global, formerly known as Falcon Edge Capital, is leading the round, sources said. Singap…",
+            "url": "https://techcrunch.com/2022/04/16/neobank-fi-finalizing-funding-at-700-million-valuation/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2019/09/GettyImages-669705048.jpg?w=669",
+            "publishedAt": "2022-04-16T12:47:52Z",
+            "content": "Indian neobank Fi is in advanced stages of talks to raise about $100 million at a $700 million valuation, according to three sources familiar with the matter.\r\nAlpha Wave Global, formerly known as Fa… [+789 chars]"
+        },
+        -{
+            -"source": {
+                "id": "techcrunch",
+                "name": "TechCrunch"
+            },
+            "author": "Natasha Mascarenhas",
+            "title": "Let’s stop pretending there are silos in startuland",
+            "description": "I have been thinking a lot about silos, or the lack thereof, within startupland. There’s sometimes an artificial wall that is put up between companies at different stages of growth, when in reality, everyone is in the same room, clinking glasses and tripping …",
+            "url": "https://techcrunch.com/2022/04/16/startup-silos-markets/",
+            "urlToImage": "https://techcrunch.com/wp-content/uploads/2019/01/GettyImages-170619460.jpg?w=600",
+            "publishedAt": "2022-04-16T11:00:56Z",
+            "content": "I have been thinking a lot about silos, or the lack thereof, within startupland. Theres sometimes an artificial wall that is put up between companies at different stages of growth, when in reality, e… [+1394 chars]"
+        }
+    ]
+}

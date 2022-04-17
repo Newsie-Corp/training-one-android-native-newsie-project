@@ -11,6 +11,11 @@ public class Source {
     @SerializedName("id")
     private String id;
 
+    public Source(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
