@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder> implements Filterable {
-
 
     private RecyclerView mRecyclerView;
     private static final String TAG = "ArticlesAdapter";
@@ -56,7 +56,13 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         ArticlesItem article = articleList.get(position);
 
-        Log.v(TAG, "ArticlesItem is " + article.toString());
+        Log.d(TAG, "ArticlesItem is " + article.toString());
+        holder.articleTitle.setText(article.getTitle());
+        holder.articleAuthor.setText(article.getAuthor());
+        holder.articleShortDescription.setText(article.getDescription());
+        holder.artcilePublishedAt.setText(article.getPublishedAt());
+        holder.articleContent.setText(article.getContent());
+        holder.articleImage.setImageResource(R.drawable.newspaper_icon);
 
     }
 
@@ -72,6 +78,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         private TextView articleShortDescription;
         private TextView artcilePublishedAt;
         private TextView articleContent;
+        private ImageView articleImage;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -81,6 +88,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
             articleShortDescription = itemView.findViewById(R.id.tv_art_short_desc);
             artcilePublishedAt = itemView.findViewById(R.id.tv_art_pa);
             articleContent = itemView.findViewById(R.id.tv_art_content_prev);
+            articleImage = (ImageView) itemView.findViewById(R.id.iv_art_content_img);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
