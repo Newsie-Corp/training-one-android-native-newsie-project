@@ -31,6 +31,23 @@ public class ArticlesItem {
     @SerializedName("content")
     private String content;
 
+    @SerializedName("content")
+    private String id;
+
+    public ArticlesItem() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+
     public ArticlesItem(String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
         this.publishedAt = publishedAt;
         this.author = author;
@@ -40,6 +57,7 @@ public class ArticlesItem {
         this.title = title;
         this.url = url;
         this.content = content;
+        this.id = id;
     }
 
     public void setPublishedAt(String publishedAt) {
