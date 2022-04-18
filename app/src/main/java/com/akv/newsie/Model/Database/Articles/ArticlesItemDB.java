@@ -1,44 +1,39 @@
-package com.akv.newsie.Model;
+package com.akv.newsie.Model.Database.Articles;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ArticlesItem {
+@Entity
+public class ArticlesItemDB {
 
-    @SerializedName("publishedAt")
+    @PrimaryKey(autoGenerate = true)
+    private Integer articleId;
+
+    private Integer articleResponseId;
+
     private String publishedAt;
 
-    @SerializedName("author")
     private String author;
 
-    @SerializedName("urlToImage")
     private String urlToImage;
 
-    @SerializedName("description")
     private String description;
 
-    @SerializedName("source")
-    private Source source;
+    @Embedded
+    private ArticlesSourceDB source;
 
-    @SerializedName("title")
     private String title;
 
-    @SerializedName("url")
     private String url;
 
-    @SerializedName("content")
     private String content;
 
-    @SerializedName("id")
-    private String id;
-
-    public ArticlesItem() {
-
-    }
-
-    public ArticlesItem(String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
+    public ArticlesItemDB(String publishedAt, String author, String urlToImage, String description, ArticlesSourceDB source, String title, String url, String content) {
         this.publishedAt = publishedAt;
         this.author = author;
         this.urlToImage = urlToImage;
@@ -47,7 +42,7 @@ public class ArticlesItem {
         this.title = title;
         this.url = url;
         this.content = content;
-        this.id = id;
+        this.articleId = articleId;
     }
 
     public void setPublishedAt(String publishedAt) {
@@ -82,11 +77,11 @@ public class ArticlesItem {
         return description;
     }
 
-    public void setSource(Source source) {
+    public void setSource(ArticlesSourceDB source) {
         this.source = source;
     }
 
-    public Source getSource() {
+    public ArticlesSourceDB getSource() {
         return source;
     }
 
@@ -114,27 +109,35 @@ public class ArticlesItem {
         return content;
     }
 
-    public String getId() {
-        return id;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Integer getArticleResponseId() {
+        return articleResponseId;
+    }
+
+    public void setArticleResponseId(Integer articleResponseId) {
+        this.articleResponseId = articleResponseId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     @Override
     public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this, ArticlesItem.class);
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this, ArticlesItemDB.class);
     }
 
-    public static ArrayList<ArticlesItem> generateArticleList() {
-        ArrayList<ArticlesItem> articlesList = new ArrayList<>();
+    public static ArrayList<ArticlesItemDB> generateArticleList() {
+        ArrayList<ArticlesItemDB> articlesList = new ArrayList<>();
 
-        articlesList.add(new ArticlesItem("2022-04-17T14:03:06Z",
+        articlesList.add(new ArticlesItemDB("2022-04-17T14:03:06Z",
                 "Mary Ann Azevedo",
                 "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
                 "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
-                new Source("techcrunch", "TechCrunch"),
+                new ArticlesSourceDB("techcrunch", "TechCrunch"),
                 "Fintech Roundup: The gloves are off in the spend management space",
                 "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
                 "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"));

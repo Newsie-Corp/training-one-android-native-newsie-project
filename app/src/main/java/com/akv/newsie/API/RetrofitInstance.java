@@ -8,19 +8,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitInstance {
 
-    private APIEndPoint API;
+    private NewsAPIEndPoint API;
 
-    public RetrofitInstance() {
+    public RetrofitInstance(String baseUrl) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(APIEndPoint.NEWSAPI_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).build();
-        API = retrofit.create(APIEndPoint.class);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create(gson)).build();
+        API = retrofit.create(NewsAPIEndPoint.class);
     }
 
-    public APIEndPoint getAPI() {
+    public NewsAPIEndPoint getAPI() {
         return API;
     }
 
-    public void setAPI(APIEndPoint API) {
+    public void setAPI(NewsAPIEndPoint API) {
         this.API = API;
     }
 }

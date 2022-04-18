@@ -13,11 +13,11 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.akv.newsie.API.APIEndPoint;
+import com.akv.newsie.API.NewsAPIEndPoint;
 import com.akv.newsie.API.RetrofitInstance;
 import com.akv.newsie.Adapter.ArticlesAdapter;
-import com.akv.newsie.Model.APIResponse;
-import com.akv.newsie.Model.ArticlesItem;
+import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
+import com.akv.newsie.Model.JSON.Articles.ArticlesResponseJSON;
 import com.akv.newsie.R;
 import com.akv.newsie.Util.SessionManager;
 
@@ -30,12 +30,12 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private SessionManager sessionManager;
-    private ArrayList<ArticlesItem> articles;
+    private ArrayList<ArticlesItemJSON> articles;
     private RecyclerView rvArticles;
     private ArticlesAdapter articlesAdapter;
-    private ArrayList<ArticlesItem> articlesList, articlesListFiltered;
+    private ArrayList<ArticlesItemJSON> articlesList, articlesListFiltered;
     private static final String TAG = "MainActivity";
-    private RetrofitInstance retrofitInstance;
+    private RetrofitInstance newsRetrofitInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rvArticles = findViewById(R.id.rv_main_list);
         sessionManager = new SessionManager(this);
-        retrofitInstance = new RetrofitInstance();
+        newsRetrofitInstance = new RetrofitInstance(NewsAPIEndPoint.API_BASE_URL);
         try {
 
-//            articles = ArticlesItem.generateArticleList();
-            retrofitInstance.getAPI().getResponseByKeyword("Apple", APIEndPoint.NEWSAPI_API_KEY).enqueue(new Callback<APIResponse>() {
+//            articles = ArticlesItemJSON.generateArticleList();
+            newsRetrofitInstance.getAPI().getResponseByKeyword("Apple", NewsAPIEndPoint.API_KEY).enqueue(new Callback<ArticlesResponseJSON>() {
                 @Override
-                public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
+                public void onResponse(Call<ArticlesResponseJSON> call, Response<ArticlesResponseJSON> response) {
                     Log.d(TAG, response.body().toString());
                     articles = response.body().getArticles();
                     if(articles.size()>0){
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<APIResponse> call, Throwable t) {
+                public void onFailure(Call<ArticlesResponseJSON> call, Throwable t) {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });

@@ -1,17 +1,18 @@
-package com.akv.newsie.Model;
+package com.akv.newsie.Model.Database.Articles;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
 
-public class Source {
+//@Entity
+public class ArticlesSourceDB {
 
-    @SerializedName("name")
     private String name;
 
-    @SerializedName("id")
     private String id;
 
-    public Source(String name, String id) {
+//    @PrimaryKey(autoGenerate = true)
+//    private Integer articleSourceId;
+
+    public ArticlesSourceDB(String name, String id) {
         this.name = name;
         this.id = id;
     }
@@ -34,6 +35,6 @@ public class Source {
 
     @Override
     public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this, Source.class);
+        return new GsonBuilder().setPrettyPrinting().create().toJson(this, ArticlesSourceDB.class);
     }
 }

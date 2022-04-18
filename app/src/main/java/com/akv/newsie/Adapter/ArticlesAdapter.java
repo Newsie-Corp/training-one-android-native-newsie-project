@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.akv.newsie.Model.ArticlesItem;
+import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
 import com.akv.newsie.R;
 import com.bumptech.glide.Glide;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,19 +31,19 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
     private RecyclerView mRecyclerView;
     private static final String TAG = "ArticlesAdapter";
 
-    private ArrayList<ArticlesItem> articleList, articleListFiltered;
+    private ArrayList<ArticlesItemJSON> articleList, articleListFiltered;
 //    private ItemPresidentBinding itemPresidentBinding;
 
-    public ArticlesAdapter(Context context, ArrayList<ArticlesItem> articleList) {
+    public ArticlesAdapter(Context context, ArrayList<ArticlesItemJSON> articleList) {
         this.articleList = articleList;
         this.articleListFiltered = new ArrayList<>(articleList);
     }
 
-    public ArrayList<ArticlesItem> getPresidentList() {
+    public ArrayList<ArticlesItemJSON> getPresidentList() {
         return articleList;
     }
 
-    public void setPresidentList(ArrayList<ArticlesItem> articleList) {
+    public void setPresidentList(ArrayList<ArticlesItemJSON> articleList) {
         this.articleList = articleList;
         this.articleListFiltered = new ArrayList<>(articleList);
     }
@@ -58,9 +58,9 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        ArticlesItem article = articleList.get(position);
+        ArticlesItemJSON article = articleList.get(position);
 
-        Log.d(TAG, "ArticlesItem is " + article.toString());
+        Log.d(TAG, "ArticlesItemJSON is " + article.toString());
         holder.articleTitle.setText(article.getTitle());
         holder.articleAuthor.setText(article.getAuthor());
         holder.articleShortDescription.setText(article.getDescription());
@@ -123,14 +123,14 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
         @Override
         protected FilterResults performFiltering(CharSequence txt) {
-            List<ArticlesItem> filteredList = new ArrayList<>();
+            List<ArticlesItemJSON> filteredList = new ArrayList<>();
             String filterPattern = "";
             if (txt == null || txt.length() == 0) {
                 filteredList.addAll(articleListFiltered);
             } else {
                 filterPattern = txt.toString().toLowerCase().trim();
 
-                for (ArticlesItem item : articleListFiltered) {
+                for (ArticlesItemJSON item : articleListFiltered) {
                     if (item.getTitle().toLowerCase().contains(filterPattern)
                     || item.getDescription().toLowerCase().contains(filterPattern)
                     || item.getContent().toLowerCase().contains(filterPattern)
@@ -147,16 +147,16 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
                                 filterPattern + " yield no result", Snackbar.LENGTH_LONG);
                 snackbar.show();
             } else {
-                Collections.sort(filteredList, new Comparator<ArticlesItem>() {
+                Collections.sort(filteredList, new Comparator<ArticlesItemJSON>() {
                     @Override
-                    public int compare(ArticlesItem p1, ArticlesItem p2) {
+                    public int compare(ArticlesItemJSON p1, ArticlesItemJSON p2) {
                         return p1.getPublishedAt().compareTo(p2.getPublishedAt());
                     }
                 });
             }
 
-            Log.d(TAG, "ArticlesItem List Filter: " + articleListFiltered);
-            Log.d(TAG, "ArticlesItem List Filter size: " + articleListFiltered.size());
+            Log.d(TAG, "ArticlesItemJSON List Filter: " + articleListFiltered);
+            Log.d(TAG, "ArticlesItemJSON List Filter size: " + articleListFiltered.size());
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;

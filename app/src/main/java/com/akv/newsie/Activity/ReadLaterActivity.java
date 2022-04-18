@@ -11,23 +11,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akv.newsie.Adapter.ArticlesAdapter;
-import com.akv.newsie.Model.ArticlesItem;
+import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
 import com.akv.newsie.R;
 
 import java.util.ArrayList;
 
 public class ReadLaterActivity extends AppCompatActivity {
 
-    ArrayList<ArticlesItem> articles;
+    ArrayList<ArticlesItemJSON> articles;
     RecyclerView rvArticles;
     ArticlesAdapter articlesAdapter;
-    ArrayList<ArticlesItem> articlesList, articlesListFiltered;
+    ArrayList<ArticlesItemJSON> articlesList, articlesListFiltered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_later);
-        articles = ArticlesItem.generateArticleList();
+        articles = ArticlesItemJSON.generateArticleList();
         rvArticles = findViewById(R.id.rv_readlater_list);
         articlesAdapter = new ArticlesAdapter(getApplicationContext(), articles);
         rvArticles.setAdapter(articlesAdapter);

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.akv.newsie.Model.ArticlesItem;
+import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +55,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<ArticlesItem> getAllNews(){
+    public List<ArticlesItemJSON> getAllNews(){
         SQLiteDatabase db = this.getReadableDatabase();
-        List<ArticlesItem> list = new ArrayList<ArticlesItem>();
+        List<ArticlesItemJSON> list = new ArrayList<ArticlesItemJSON>();
         String query = "SELECT author, title, description, url, img, publish, content, id FROM NEWS order by publish ASC";
         try {
             Cursor cursor = db.rawQuery(query, null);
@@ -67,7 +67,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     if (cursor.moveToFirst()) {
                         do {
                             try {
-                                ArticlesItem news = new ArticlesItem();
+                                ArticlesItemJSON news = new ArticlesItemJSON();
                                 news.setAuthor(cursor.getString(0)) ;
                                 news.setTitle(cursor.getString(1));
                                 news.setDescription(cursor.getString(2));
