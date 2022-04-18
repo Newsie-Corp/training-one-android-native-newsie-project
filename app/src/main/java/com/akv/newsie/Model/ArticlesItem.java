@@ -31,22 +31,12 @@ public class ArticlesItem {
     @SerializedName("content")
     private String content;
 
-    @SerializedName("content")
+    @SerializedName("id")
     private String id;
 
     public ArticlesItem() {
 
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-
 
     public ArticlesItem(String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
         this.publishedAt = publishedAt;
@@ -122,6 +112,14 @@ public class ArticlesItem {
 
     public String getContent() {
         return content;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
