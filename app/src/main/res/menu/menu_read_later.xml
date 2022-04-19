@@ -3,6 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:title="Item"
+        android:id="@+id/app_bar_bookmarks"
+        app:showAsAction="always"
+        android:icon="@android:drawable/btn_star_big_on"
+        />
+
+    <item
         android:title="Search"
         android:id="@+id/app_bar_search"
         app:showAsAction="ifRoom"

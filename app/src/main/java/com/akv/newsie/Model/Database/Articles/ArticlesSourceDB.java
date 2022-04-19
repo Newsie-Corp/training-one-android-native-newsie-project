@@ -6,16 +6,19 @@ import com.google.gson.GsonBuilder;
 public class ArticlesSourceDB {
 
     private String name;
-
     private String id;
+    private Integer articleId;
 
 //    @PrimaryKey(autoGenerate = true)
 //    private Integer articleSourceId;
 
-    public ArticlesSourceDB(String name, String id) {
-        this.name = name;
-        this.id = id;
+    public ArticlesSourceDB() {
     }
+
+//    public ArticlesSourceDB(String name, String id) {
+//        this.name = name;
+//        this.id = id;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -31,6 +34,14 @@ public class ArticlesSourceDB {
 
     public String getId() {
         return id;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface ArticlesItemDao {
     List<ArticlesItemDB> getAll();
 
     @Query("SELECT * FROM ArticlesItemDB WHERE articleId in (:articlesItemsIds)")
-    List<ArticlesItemDB> loadAllById(int[] articlesItemsIds);
+    List<ArticlesItemDB> getAllById(int[] articlesItemsIds);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(ArticlesItemDB... articlesItems);

@@ -11,10 +11,15 @@ public class ArticlesSourceJSON {
     @SerializedName("id")
     private String id;
 
-    public ArticlesSourceJSON(String name, String id) {
-        this.name = name;
-        this.id = id;
+    private Integer articleId;
+
+    public ArticlesSourceJSON() {
     }
+
+//    public ArticlesSourceJSON(String name, String id) {
+//        this.name = name;
+//        this.id = id;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -30,6 +35,14 @@ public class ArticlesSourceJSON {
 
     public String getId() {
         return id;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     @Override

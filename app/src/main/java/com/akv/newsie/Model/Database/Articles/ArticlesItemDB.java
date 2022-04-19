@@ -1,6 +1,5 @@
 package com.akv.newsie.Model.Database.Articles;
 
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -24,8 +23,8 @@ public class ArticlesItemDB {
 
     private String description;
 
-    @Embedded
-    private ArticlesSourceDB source;
+//    @Embedded
+//    private ArticlesSourceDB source;
 
     private String title;
 
@@ -33,17 +32,19 @@ public class ArticlesItemDB {
 
     private String content;
 
-    public ArticlesItemDB(String publishedAt, String author, String urlToImage, String description, ArticlesSourceDB source, String title, String url, String content) {
-        this.publishedAt = publishedAt;
-        this.author = author;
-        this.urlToImage = urlToImage;
-        this.description = description;
-        this.source = source;
-        this.title = title;
-        this.url = url;
-        this.content = content;
-        this.articleId = articleId;
+    public ArticlesItemDB() {
     }
+
+//    public ArticlesItemDB(String publishedAt, String author, String urlToImage, String description, ArticlesSourceDB source, String title, String url, String content) {
+//        this.publishedAt = publishedAt;
+//        this.author = author;
+//        this.urlToImage = urlToImage;
+//        this.description = description;
+//        this.source = source;
+//        this.title = title;
+//        this.url = url;
+//        this.content = content;
+//    }
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
@@ -77,13 +78,13 @@ public class ArticlesItemDB {
         return description;
     }
 
-    public void setSource(ArticlesSourceDB source) {
-        this.source = source;
-    }
+//    public void setSource(ArticlesSourceDB source) {
+//        this.source = source;
+//    }
 
-    public ArticlesSourceDB getSource() {
-        return source;
-    }
+//    public ArticlesSourceDB getSource() {
+//        return source;
+//    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -133,14 +134,14 @@ public class ArticlesItemDB {
     public static ArrayList<ArticlesItemDB> generateArticleList() {
         ArrayList<ArticlesItemDB> articlesList = new ArrayList<>();
 
-        articlesList.add(new ArticlesItemDB("2022-04-17T14:03:06Z",
-                "Mary Ann Azevedo",
-                "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
-                "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
-                new ArticlesSourceDB("techcrunch", "TechCrunch"),
-                "Fintech Roundup: The gloves are off in the spend management space",
-                "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
-                "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"));
+//        articlesList.add(new ArticlesItemDB("2022-04-17T14:03:06Z",
+//                "Mary Ann Azevedo",
+//                "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
+//                "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
+//                new ArticlesSourceDB("techcrunch", "TechCrunch"),
+//                "Fintech Roundup: The gloves are off in the spend management space",
+//                "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
+//                "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"));
         return articlesList;
     }
 }

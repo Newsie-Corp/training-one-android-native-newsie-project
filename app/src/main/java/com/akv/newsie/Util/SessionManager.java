@@ -37,6 +37,10 @@ public class SessionManager {
         editor.commit();
     }
 
+    public String getUsername() {
+        return pref.getString(key_nama_user, "nouser");
+    }
+
     public void checkLogin(){
         if (!this.is_login()){
             Intent i = new Intent(context, LoginActivity.class);

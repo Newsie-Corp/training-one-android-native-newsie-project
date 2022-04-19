@@ -22,8 +22,8 @@ import java.util.concurrent.Executors;
         ArticlesResponseDB.class,
         UserArticlesCrossRefDB.class,
         UserDataDB.class,
-        UserResponseDB.class
-}, version = 1, exportSchema = true)
+        UserResponseDB.class,
+}, version = 4, exportSchema = true)
 
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ArticlesItemDao articlesItemDao();
@@ -32,6 +32,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserResponseDao userResponseDao();
     public abstract UserArticlesCrossRefDao userBookmarksDao();
 
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(1);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(1);
 
 }

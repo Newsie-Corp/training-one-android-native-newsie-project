@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserResponseJSON {
 
+	private Integer userResponseId;
+
 	@SerializedName("data")
 	private UserDataJSON data;
 
@@ -16,6 +18,24 @@ public class UserResponseJSON {
 
 	@SerializedName("token")
 	private String token;
+
+	public UserResponseJSON() {
+	}
+
+//	public UserResponseJSON(UserDataJSON data, String message, boolean status, String token) {
+//		this.data = data;
+//		this.message = message;
+//		this.status = status;
+//		this.token = token;
+//	}
+
+	public Integer getUserResponseId() {
+		return userResponseId;
+	}
+
+	public void setUserResponseId(Integer userResponseId) {
+		this.userResponseId = userResponseId;
+	}
 
 	public UserDataJSON getData(){
 		return data;

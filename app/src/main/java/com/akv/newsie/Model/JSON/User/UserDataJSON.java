@@ -44,6 +44,8 @@ public class UserDataJSON {
 	@SerializedName("oauth_provider")
 	private String oauthProvider;
 
+	private Integer userId;
+
 	@SerializedName("id")
 	private String id;
 
@@ -58,6 +60,31 @@ public class UserDataJSON {
 
 	@SerializedName("username")
 	private String username;
+
+	private Integer userResponseId;
+
+	public UserDataJSON() {
+	}
+
+//	public UserDataJSON(String rememberExp, String companyId, String lastLogin, String dateCreated, String oauthUid, String avatar, String ipAddress, String forgotExp, String rememberTime, String fullName, String lastActivity, String topSecret, String oauthProvider, String banned, String verificationCode, String email, String username) {
+//		this.rememberExp = rememberExp;
+//		this.companyId = companyId;
+//		this.lastLogin = lastLogin;
+//		this.dateCreated = dateCreated;
+//		this.oauthUid = oauthUid;
+//		this.avatar = avatar;
+//		this.ipAddress = ipAddress;
+//		this.forgotExp = forgotExp;
+//		this.rememberTime = rememberTime;
+//		this.fullName = fullName;
+//		this.lastActivity = lastActivity;
+//		this.topSecret = topSecret;
+//		this.oauthProvider = oauthProvider;
+//		this.banned = banned;
+//		this.verificationCode = verificationCode;
+//		this.email = email;
+//		this.username = username;
+//	}
 
 	public String getRememberExp(){
 		return rememberExp;
@@ -109,6 +136,10 @@ public class UserDataJSON {
 
 	public String getOauthProvider(){
 		return oauthProvider;
+	}
+
+	public Integer getUserId() {
+		return userId;
 	}
 
 	public String getId(){
@@ -183,6 +214,10 @@ public class UserDataJSON {
 		this.oauthProvider = oauthProvider;
 	}
 
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -201,6 +236,14 @@ public class UserDataJSON {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Integer getUserResponseId() {
+		return userResponseId;
+	}
+
+	public void setUserResponseId(Integer userResponseId) {
+		this.userResponseId = userResponseId;
 	}
 
 	@Override

@@ -17,10 +17,10 @@ public interface UserArticlesCrossRefDao {
     List<UserArticlesCrossRefDB> getAll();
 
     @Query("SELECT * FROM UserArticlesCrossRefDB WHERE userId in (:userIds)")
-    List<UserArticlesCrossRefDB> loadAllByUserId(int[] userIds);
+    List<UserArticlesCrossRefDB> getAllByUserId(String... userIds);
 
     @Query("SELECT * FROM UserArticlesCrossRefDB WHERE articleId in (:articleItemsIds)")
-    List<UserArticlesCrossRefDB> loadAllByArticleItemsId(int[] articleItemsIds);
+    List<UserArticlesCrossRefDB> getAllByArticleItemsId(int[] articleItemsIds);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(UserArticlesCrossRefDB... articlesResponses);

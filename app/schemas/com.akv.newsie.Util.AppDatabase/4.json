@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "110b48d55108212b08854559e4356ce6",
+    "version": 4,
+    "identityHash": "df512be1364bdbe281093eefcae8538d",
     "entities": [
       {
         "tableName": "ArticlesItemDB",
@@ -106,12 +106,12 @@
       },
       {
         "tableName": "UserArticlesCrossRefDB",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` INTEGER NOT NULL, `articleId` INTEGER NOT NULL, PRIMARY KEY(`userId`, `articleId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `articleId` INTEGER NOT NULL, PRIMARY KEY(`userId`, `articleId`))",
         "fields": [
           {
             "fieldPath": "userId",
             "columnName": "userId",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -133,7 +133,7 @@
       },
       {
         "tableName": "UserDataDB",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rememberExp` TEXT, `companyId` TEXT, `lastLogin` TEXT, `dateCreated` TEXT, `oauthUid` TEXT, `avatar` TEXT, `ipAddress` TEXT, `forgotExp` TEXT, `rememberTime` TEXT, `fullName` TEXT, `lastActivity` TEXT, `topSecret` TEXT, `oauthProvider` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT, `banned` TEXT, `verificationCode` TEXT, `email` TEXT, `username` TEXT, `userResponseId` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rememberExp` TEXT, `companyId` TEXT, `lastLogin` TEXT, `dateCreated` TEXT, `oauthUid` TEXT, `avatar` TEXT, `ipAddress` TEXT, `forgotExp` TEXT, `rememberTime` TEXT, `fullName` TEXT, `lastActivity` TEXT, `topSecret` TEXT, `oauthProvider` TEXT, `userId` INTEGER PRIMARY KEY AUTOINCREMENT, `id` INTEGER, `banned` TEXT, `verificationCode` TEXT, `email` TEXT, `username` TEXT, `userResponseId` INTEGER)",
         "fields": [
           {
             "fieldPath": "rememberExp",
@@ -214,6 +214,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER",
@@ -252,7 +258,7 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "userId"
           ],
           "autoGenerate": true
         },
@@ -301,7 +307,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '110b48d55108212b08854559e4356ce6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'df512be1364bdbe281093eefcae8538d')"
     ]
   }
 }

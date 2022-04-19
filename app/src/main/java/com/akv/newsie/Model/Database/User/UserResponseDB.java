@@ -11,11 +11,33 @@ public class UserResponseDB {
 	@PrimaryKey(autoGenerate = true)
 	private Integer userResponseId;
 
+//	@Embedded
+//	private UserDataDB data;
+
 	private String message;
 
 	private boolean status;
 
 	private String token;
+
+	public UserResponseDB() {
+	}
+
+//	public UserResponseDB(Integer userResponseId, UserDataDB data, String message, boolean status, String token) {
+//		this.userResponseId = userResponseId;
+//		this.data = data;
+//		this.message = message;
+//		this.status = status;
+//		this.token = token;
+//	}
+
+//	public UserDataDB getData() {
+//		return data;
+//	}
+//
+//	public void setData(UserDataDB data) {
+//		this.data = data;
+//	}
 
 	public Integer getUserResponseId() {
 		return userResponseId;

@@ -16,7 +16,7 @@ public interface UserDataDao {
     @Query("SELECT * FROM UserDataDB")
     List<UserDataDB> getAll();
 
-    @Query("SELECT * FROM UserDataDB WHERE userId in (:userIds)")
+    @Query("SELECT * FROM UserDataDB WHERE id in (:userIds)")
     List<UserDataDB> loadAllById(int[] userIds);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
