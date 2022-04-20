@@ -126,10 +126,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("X-API-KEY", KEY);
+                    params.put("x-api-key", KEY);
                     return params;
                 }
-
 
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
