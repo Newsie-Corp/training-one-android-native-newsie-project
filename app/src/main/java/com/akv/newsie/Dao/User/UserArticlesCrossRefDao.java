@@ -1,6 +1,7 @@
 package com.akv.newsie.Dao.User;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -19,8 +20,11 @@ public interface UserArticlesCrossRefDao {
     @Query("SELECT * FROM UserArticlesCrossRefDB WHERE userId in (:userIds)")
     List<UserArticlesCrossRefDB> getAllByUserId(String... userIds);
 
-    @Query("SELECT * FROM UserArticlesCrossRefDB WHERE articleId in (:articleItemsIds)")
-    List<UserArticlesCrossRefDB> getAllByArticleItemsId(int[] articleItemsIds);
+    @Query("SELECT * FROM UserArticlesCrossRefDB WHERE articleId in (:articlesItemsIds)")
+    List<UserArticlesCrossRefDB> getAllByArticleItemsId(int[] articlesItemsIds);
+
+    @Query("SELECT * FROM UserArticlesCrossRefDB WHERE articleId = :articlesItemsId AND userId = :userId")
+    UserArticlesCrossRefDB getByArticleItemsIdAndUserId(int articlesItemsId, String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(UserArticlesCrossRefDB... articlesResponses);
@@ -30,4 +34,8 @@ public interface UserArticlesCrossRefDao {
 
     @Query("DELETE FROM UserArticlesCrossRefDB")
     void deleteAll();
+
+    @Delete
+    void deleteUserBookmarks(UserArticlesCrossRefDB... userArticlesCrossRefDBS);
+
 }

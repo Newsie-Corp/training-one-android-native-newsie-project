@@ -1,6 +1,7 @@
 package com.akv.newsie.Activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import com.akv.newsie.API.RetrofitInstance;
 import com.akv.newsie.Action.ArticlesItemAction;
 import com.akv.newsie.Adapter.ArticlesAdapter;
 import com.akv.newsie.Dao.Articles.ArticlesItemDao;
+import com.akv.newsie.Dao.User.UserArticlesCrossRefDao;
 import com.akv.newsie.Model.Converter.Articles.ArticlesItemConverter;
 import com.akv.newsie.Model.Database.Articles.ArticlesItemDB;
 import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
@@ -35,7 +38,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    public static final String TAG = "MainActivity";
     private SessionManager sessionManager;
     private List<ArticlesItemJSON> articlesItemsJSON;
     private List<ArticlesItemDB> articlesItemsDB;
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private RetrofitInstance newsRetrofitInstance;
     private AppDatabase database;
     private ArticlesItemDao articlesItemDao;
+    private UserArticlesCrossRefDao userBookmarksDao;
     private ArticlesItemAction articlesItemAction;
 
     private ArticlesItemConverter articlesItemConverter;
@@ -65,31 +69,30 @@ public class MainActivity extends AppCompatActivity {
                     .allowMainThreadQueries()
                     .build();
             articlesItemDao = database.articlesItemDao();
+            userBookmarksDao = database.userBookmarksDao();
 
-            articlesItemDao.deleteAll();
+            articlesItemsDB = articlesItemDao.getAll();
+            if(articlesItemsDB.size() == 0) {
+                articlesItemConverter = new ArticlesItemConverter();
+                newsRetrofitInstance.getAPI().getResponseByKeyword("Apple", NewsAPIEndPoint.API_KEY).enqueue(new Callback<ArticlesResponseJSON>() {
+                    @Override
+                    public void onResponse(Call<ArticlesResponseJSON> call, Response<ArticlesResponseJSON> response) {
+                        articlesItemsJSON = response.body().getArticles();
+                        for (int i = 0; i < articlesItemsJSON.size(); i++) {
+                            articlesItemDao.insertAll(articlesItemConverter.articlesItemJSONtoDB(articlesItemsJSON.get(i)));
+                        }
 
-            articlesItemConverter = new ArticlesItemConverter();
-            newsRetrofitInstance.getAPI().getResponseByKeyword("Apple", NewsAPIEndPoint.API_KEY).enqueue(new Callback<ArticlesResponseJSON>() {
-                @Override
-                public void onResponse(Call<ArticlesResponseJSON> call, Response<ArticlesResponseJSON> response) {
-                    articlesItemsJSON = response.body().getArticles();
-                    for (int i = 0; i < articlesItemsJSON.size(); i++) {
-                        articlesItemDao.insertAll(articlesItemConverter.articlesItemJSONtoDB(articlesItemsJSON.get(i)));
-                    }
-
-                    articlesItemsDB = articlesItemDao.getAll();
-                    if(articlesItemsDB.size()>0){
+                        articlesItemsDB = articlesItemDao.getAll();
                         initAdapter();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "No News Currently", Toast.LENGTH_SHORT).show();
-                    }
-                }
 
-                @Override
-                public void onFailure(Call<ArticlesResponseJSON> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-                }
-            });
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArticlesResponseJSON> call, Throwable t) {
+                        Log.d(TAG, "onFailure: " + t.getMessage());
+                    }
+                });
+            } else initAdapter();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,9 +104,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_read_later, menu);
+        inflater.inflate(R.menu.menu_home, menu);
         filterFunction(menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.home_app_bar_bookmarks:
+                Toast.makeText(getApplicationContext(), "going to read later page", Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(getApplicationContext(), ReadLaterActivity.class);
+//                intent.putExtra("user_id", sessionManager.getUsername());
+                startActivity(intent);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -117,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
                 dialog.dismiss();
 
                 sessionManager.logout();
-
+                articlesItemDao.deleteAll();
+                userBookmarksDao.deleteAll();
             }
         });
         ab.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -133,16 +153,15 @@ public class MainActivity extends AppCompatActivity {
     public void initAdapter() {
         articlesItemAction = new ArticlesItemAction(getApplicationContext());
 
+        if(articlesItemsDB.size() == 0)
+            Toast.makeText(getApplicationContext(), "No News Currently", Toast.LENGTH_SHORT).show();
+
         articlesAdapter = new ArticlesAdapter(getApplicationContext(), articlesItemsDB, new ArticlesAdapter.ClickListener() {
             @Override
             public void onItemClick(ArticlesItemDB articlesItemDB) {
-//                Toast.makeText(getApplicationContext(), "selected " + articlesItemDB.getTitle(), Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), DetailNewsActivity.class);
-//                intent.putExtra("id", articlesItemDB.getArticleId());
                 articlesItemAction.goToDetail(articlesItemDB);
-
             }
-        });
+        }, TAG);
 
 //        articlesAdapter.setListener(new ArticlesAdapter.ClickListener() {
 //            @Override
@@ -157,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void filterFunction(Menu menu) {
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        MenuItem searchItem = menu.findItem(R.id.home_app_bar_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.akv.newsie.Activity.MainActivity;
+import com.akv.newsie.Activity.ReadLaterActivity;
 import com.akv.newsie.Dao.User.UserArticlesCrossRefDao;
 import com.akv.newsie.Model.Database.Articles.ArticlesItemDB;
 import com.akv.newsie.Model.Database.Relations.UserArticlesCrossRefDB;
@@ -39,7 +41,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
     private RecyclerView mRecyclerView;
     private static final String TAG = "ArticlesAdapter";
-
+    private String currentActivity;
     private List<ArticlesItemDB> articleList, articleListFiltered;
     //    private ItemPresidentBinding itemPresidentBinding;
     private UserArticlesCrossRefDao userBookmarksDao;
@@ -49,7 +51,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
 
     private ClickListener listener;
 
-    public ArticlesAdapter(Context context, List<ArticlesItemDB> articleList, ClickListener clickListener) {
+    public ArticlesAdapter(Context context, List<ArticlesItemDB> articleList, ClickListener clickListener, String currentActivity) {
         this.articleList = articleList;
         this.articleListFiltered = new ArrayList<>(articleList);
         this.listener = clickListener;
@@ -58,7 +60,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         database = Room.databaseBuilder(context, AppDatabase.class, "newsie-db")
                 .allowMainThreadQueries()
                 .build();
-        this.userBookmarksDao = database.userBookmarksDao();;
+        this.userBookmarksDao = database.userBookmarksDao();
+        this.currentActivity = currentActivity;
     }
 
     public List<ArticlesItemDB> getPresidentList() {
@@ -97,27 +100,56 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         holder.artcilePublishedAt.setText(article.getPublishedAt());
 //        holder.articleContent.setText(article.getContent());
         holder.articleImage.setImageResource(R.drawable.newspaper_icon);
-        holder.plusIcon.setImageResource(R.drawable.plus_icon);
+
+        if (currentActivity.equals(MainActivity.TAG)) {
+            holder.actionIcon.setImageResource(R.drawable.plus_icon);
+            holder.actionIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position != RecyclerView.NO_POSITION) {
+                        String message = "adding article " + article.getArticleId() + " to read later";
+                        showSnackbar(v, message, Snackbar.LENGTH_LONG);
+
+                        UserArticlesCrossRefDB userArticlesCrossRefDB = new UserArticlesCrossRefDB();
+                        userArticlesCrossRefDB.setArticleId(article.getArticleId());
+                        userArticlesCrossRefDB.setUserId(sessionManager.getUsername());
+                        userBookmarksDao.insertAll(userArticlesCrossRefDB);
+
+                        userBookmarksDB = userBookmarksDao.getAll();
+                        Log.d(TAG, "userBookmarkDB " + userBookmarksDB.size() + " " + userBookmarksDB.toString());
+
+                    }
+                }
+            });
+        } else if (currentActivity.equals(ReadLaterActivity.TAG)) {
+            holder.actionIcon.setImageResource(R.drawable.delete_icon);
+            holder.actionIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position != RecyclerView.NO_POSITION) {
+
+                        String message = "deleting article " + article.getArticleId() + " from read later";
+                        showSnackbar(v, message, Snackbar.LENGTH_LONG);
+
+                        UserArticlesCrossRefDB userArticlesCrossRefDB
+                                = userBookmarksDao.getByArticleItemsIdAndUserId(
+                                article.getArticleId(),
+                                sessionManager.getUsername());
+//                        userArticlesCrossRefDB.setArticleId(article.getArticleId());
+//                        userArticlesCrossRefDB.setUserId(sessionManager.getUsername());
+                        userBookmarksDao.deleteUserBookmarks(userArticlesCrossRefDB);
+
+                        userBookmarksDB = userBookmarksDao.getAll();
+                        notifyDataSetChanged();
+                        Log.d(TAG, "userBookmarkDB " + userBookmarksDB.size() + " " + userBookmarksDB.toString());
+
+                    }
+                }
+            });
+        }
+
         Glide.with(mRecyclerView).load(article.getUrlToImage()).into(holder.articleImage);
 
-        holder.plusIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (position != RecyclerView.NO_POSITION) {
-
-                    String message = "adding article " + article.getArticleId() + " to read later";
-                    showSnackbar(v, message, Snackbar.LENGTH_LONG);
-
-                    UserArticlesCrossRefDB userArticlesCrossRefDB = new UserArticlesCrossRefDB();
-                    userArticlesCrossRefDB.setArticleId(article.getArticleId());
-                    userArticlesCrossRefDB.setUserId(sessionManager.getUsername());
-                    userBookmarksDao.insertAll(userArticlesCrossRefDB);
-
-                    userBookmarksDB = userBookmarksDao.getAll();
-                    Log.d(TAG, "userBookmarkDB " + userBookmarksDB.size() + " " + userBookmarksDB.toString());
-                }
-            }
-        });
     }
 
     @Override
@@ -133,7 +165,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         private TextView artcilePublishedAt;
         //        private TextView articleContent;
         private ImageView articleImage;
-        private ImageView plusIcon;
+        private ImageView actionIcon;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -144,7 +176,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
             artcilePublishedAt = itemView.findViewById(R.id.tv_art_pa);
 //            articleContent = itemView.findViewById(R.id.tv_art_content_prev);
             articleImage = (ImageView) itemView.findViewById(R.id.iv_art_content_img);
-            plusIcon = (ImageView) itemView.findViewById(R.id.iv_art_plus_ic);
+            actionIcon = (ImageView) itemView.findViewById(R.id.iv_art_plus_ic);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

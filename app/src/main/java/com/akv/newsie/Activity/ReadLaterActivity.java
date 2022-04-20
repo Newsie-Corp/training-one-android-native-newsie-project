@@ -2,9 +2,6 @@ package com.akv.newsie.Activity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +27,7 @@ import java.util.List;
 
 public class ReadLaterActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReadLaterActivity";
+    public static final String TAG = "ReadLaterActivity";
     private RecyclerView rvArticles;
     private ArticlesAdapter articlesAdapter;
 
@@ -53,9 +50,13 @@ public class ReadLaterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_later);
-        articlesItemsDB = ArticlesItemDB.generateArticleList();
+//        articlesItemsDB = ArticlesItemDB.generateArticleList();
         rvArticles = findViewById(R.id.rv_readlater_list);
         sessionManager = new SessionManager(this);
+
+//        String dataString = getIntent().getStringExtra("dataString");
+//        int dataInt = getIntent().getIntExtra("dataInt", 0);
+//        double dataDouble = getIntent().getDoubleExtra("dataDouble", 0);
 
         try {
 
@@ -79,7 +80,16 @@ public class ReadLaterActivity extends AppCompatActivity {
                     articlesItemsIds[i] = userBookmarksDB.get(i).getArticleId();
                 }
 
-                articlesItemsDB.add((ArticlesItemDB) articlesItemsDao.getAllById(articlesItemsIds));
+                for (int i = 0; i < userBookmarksDB.size(); i++) {
+                    Log.d(TAG, "userBookmarksDB i " + i + " " + userBookmarksDB.get(i).toString());
+                    Log.d(TAG, "articlesItemsIds i " + i + " " + articlesItemsIds[i]);
+                }
+
+                articlesItemsDB = articlesItemsDao.getAllById(articlesItemsIds);
+                for (int i = 0; i < articlesItemsDB.size(); i++) {
+                    Log.d(TAG, "articlesItemsDB i " + i + " " + articlesItemsDB.get(i).toString());
+                }
+
                 initAdapter();
             } else {
                 Toast.makeText(getApplicationContext(), "No news to be read later currently", Toast.LENGTH_SHORT).show();
@@ -90,16 +100,23 @@ public class ReadLaterActivity extends AppCompatActivity {
             Log.d(TAG, e.toString());
         }
 
-
+        SearchView searchBtn = findViewById(R.id.sv_rl_btn);
+        filterFunction(searchBtn);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_read_later, menu);
-        filterFunction(menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_read_later, menu);
+//        filterFunction(menu);
+//        return true;
+//    }
+
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        startActivity(intent);
+//    }
 
     public void initAdapter() {
         articlesItemAction = new ArticlesItemAction(getApplicationContext());
@@ -113,7 +130,7 @@ public class ReadLaterActivity extends AppCompatActivity {
                 articlesItemAction.goToDetail(articlesItemsDB);
 
             }
-        });
+        }, TAG);
 
 //        articlesAdapter.setListener(new ArticlesAdapter.ClickListener() {
 //            @Override
@@ -127,10 +144,7 @@ public class ReadLaterActivity extends AppCompatActivity {
 
     }
 
-    public void filterFunction(Menu menu) {
-        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
-
+    public void filterFunction(SearchView searchView) {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String text) {

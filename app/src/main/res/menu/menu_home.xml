@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Item"
+        android:id="@+id/home_app_bar_bookmarks"
+        app:showAsAction="always"
+        android:icon="@android:drawable/btn_star_big_on"
+        />
 
     <item
         android:title="Search"
-        android:id="@+id/rl_app_bar_search"
+        android:id="@+id/home_app_bar_search"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_search_24"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
