@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         try {
-            articles = ArticlesItem.generateArticleList();
+//            articles = ArticlesItem.generateArticleList();
             rvArticles = findViewById(R.id.rv_main_list);
             articlesAdapter = new ArticlesAdapter(getApplicationContext(), articles);
             rvArticles.setAdapter(articlesAdapter);

@@ -48,17 +48,17 @@ public class ArticlesItem {
 
 
 
-    public ArticlesItem(String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
-        this.publishedAt = publishedAt;
-        this.author = author;
-        this.urlToImage = urlToImage;
-        this.description = description;
-        this.source = source;
-        this.title = title;
-        this.url = url;
-        this.content = content;
-        this.id = id;
-    }
+//    public ArticlesItem(String publishedAt, String author, String urlToImage, String description, Source source, String title, String url, String content) {
+//        this.publishedAt = publishedAt;
+//        this.author = author;
+//        this.urlToImage = urlToImage;
+//        this.description = description;
+//        this.source = source;
+//        this.title = title;
+//        this.url = url;
+//        this.content = content;
+//        this.id = id;
+//    }
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
@@ -124,22 +124,22 @@ public class ArticlesItem {
         return content;
     }
 
-    @Override
-    public String toString() {
-        return new GsonBuilder().setPrettyPrinting().create().toJson(this, ArticlesItem.class);
-    }
+//    @Override
+//    public String toString() {
+//        return new GsonBuilder().setPrettyPrinting().create().toJson(this, ArticlesItem.class);
+//    }
 
-    public static ArrayList<ArticlesItem> generateArticleList() {
-        ArrayList<ArticlesItem> articlesList = new ArrayList<>();
-
-        articlesList.add(new ArticlesItem("2022-04-17T14:03:06Z",
-                "Mary Ann Azevedo",
-                "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
-                "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
-                new Source("techcrunch", "TechCrunch"),
-                "Fintech Roundup: The gloves are off in the spend management space",
-                "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
-                "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"));
-        return articlesList;
-    }
+//    public static ArrayList<ArticlesItem> generateArticleList() {
+//        ArrayList<ArticlesItem> articlesList = new ArrayList<>();
+//
+//        articlesList.add(new ArticlesItem("2022-04-17T14:03:06Z",
+//                "Mary Ann Azevedo",
+//                "https://techcrunch.com/wp-content/uploads/2021/04/boxing_gloves_suit-e1650068012177.jpg?w=600",
+//                "If it feels like we’ve been over-indexing on expense/spend management news, it’s because there has just been so darn much of it.",
+//                new Source("techcrunch", "TechCrunch"),
+//                "Fintech Roundup: The gloves are off in the spend management space",
+//                "https://techcrunch.com/2022/04/17/fintech-roundup-the-gloves-are-off-in-the-spend-management-space/",
+//                "Welcome to my weekly fintech-focused column. Ill be publishing this every Sunday, so in between posts, be sure to listen to the Equity podcast and hear Alex Wilhelm, Natasha Mascarenhas and me riff o… [+19795 chars]"));
+//        return articlesList;
+//    }
 }
