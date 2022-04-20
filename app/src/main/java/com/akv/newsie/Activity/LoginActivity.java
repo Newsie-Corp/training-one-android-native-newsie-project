@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
 
 
-                            if(respStatus.equals("true")){
+                            if(respStatus.equals(true)){
 
                                 loading.dismiss();
                                 //If the server response is not success
