@@ -13,7 +13,7 @@
         android:layout_width="156dp"
         android:layout_height="99dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/newspaper_icon"
+        android:background="@drawable/news_icon"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout

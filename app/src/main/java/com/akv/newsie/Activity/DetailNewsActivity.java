@@ -88,7 +88,7 @@ public class DetailNewsActivity extends AppCompatActivity {
         articleTitle.setText(articlesItemDB.getTitle());
         articleAuthor.setText(articlesItemDB.getAuthor());
         artcilePublishedAt.setText(articlesItemDB.getPublishedAt());
-        articleImage.setImageResource(R.drawable.newspaper_icon);
+        articleImage.setImageResource(R.drawable.news_icon);
         actionIcon.setImageResource(R.drawable.plus_icon);
         actionIcon.setOnClickListener(new View.OnClickListener() {
             @Override

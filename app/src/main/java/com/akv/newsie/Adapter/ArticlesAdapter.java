@@ -101,7 +101,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         holder.articleTitle.setText(article.getTitle());
         holder.articleAuthor.setText(article.getAuthor());
         holder.artcilePublishedAt.setText(article.getPublishedAt());
-        holder.articleImage.setImageResource(R.drawable.newspaper_icon);
+        holder.articleImage.setImageResource(R.drawable.news_icon);
 
         if (currentActivity.equals(MainActivity.TAG)) {
             holder.actionIcon.setImageResource(R.drawable.plus_icon);
