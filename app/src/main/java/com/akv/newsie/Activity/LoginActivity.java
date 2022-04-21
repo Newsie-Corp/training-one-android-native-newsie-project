@@ -44,9 +44,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public final String LOGIN_URL = "https://talentpool.oneindonesia.id/api/user/login";
     public final String KEY = "454041184B0240FBA3AACD15A1F7A8BB";
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sessionManager = new SessionManager(this);
     }
 
-
     @Override
     public void onClick(View view) {
-
 
         if(view == buttonLogin){
             String user = username.getText().toString();
@@ -77,40 +72,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             try{
                                 JSONObject obj = new JSONObject(response);
                                 String status = obj.getString("status");
+                                String email = obj.getJSONObject("data").getString("email");
+                                String username = obj.getJSONObject("data").getString("username");
+                                String fullname = obj.getJSONObject("data").getString("full_name");
                                 respStatus = status;
+
+
+                                if(respStatus.equals(true)){
+
+                                    loading.dismiss();
+                                    //If the server response is not success
+                                    //Displaying an error message on toast
+                                    Toast.makeText(LoginActivity.this, "Username atau password yang Anda masukkan salah.", Toast.LENGTH_LONG).show();
+
+
+                                } else {
+                                    //Creating a shared preference
+                                    SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+                                    //Creating editor to store values to shared preferences
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                    //Adding values to editor
+                                    editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
+
+                                    //Saving values to editor
+                                    editor.commit();
+
+                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(i);
+                                    finish();
+                                    sessionManager.createSession(username, fullname, email);
+                                }
                             }catch (JSONException e){
                                 e.printStackTrace();
                             }
 
-
-                            if(respStatus.equals(true)){
-
-                                loading.dismiss();
-                                //If the server response is not success
-                                //Displaying an error message on toast
-                                Toast.makeText(LoginActivity.this, "Username atau password yang Anda masukkan salah.", Toast.LENGTH_LONG).show();
-
-
-                            } else {
-                                //Creating a shared preference
-                                SharedPreferences sharedPreferences = LoginActivity.this.getSharedPreferences(Config.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-
-                                //Creating editor to store values to shared preferences
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                                //Adding values to editor
-                                editor.putBoolean(Config.LOGGEDIN_SHARED_PREF, true);
-
-                                //Saving values to editor
-                                editor.commit();
-
-                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(i);
-                                finish();
-                                sessionManager.createSession(user);
-                            }
                         }
                     },
                     new Response.ErrorListener() {
@@ -123,6 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(LoginActivity.this, "Cek koneksi internet Anda.", Toast.LENGTH_LONG).show();
                         }
                     }){
+
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();

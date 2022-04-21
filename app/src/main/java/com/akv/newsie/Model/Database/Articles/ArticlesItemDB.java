@@ -78,14 +78,6 @@ public class ArticlesItemDB {
         return description;
     }
 
-//    public void setSource(ArticlesSourceDB source) {
-//        this.source = source;
-//    }
-
-//    public ArticlesSourceDB getSource() {
-//        return source;
-//    }
-
     public void setTitle(String title) {
         this.title = title;
     }

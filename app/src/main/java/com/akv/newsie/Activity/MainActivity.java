@@ -115,9 +115,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.home_app_bar_bookmarks:
                 Toast.makeText(getApplicationContext(), "going to read later page", Toast.LENGTH_LONG).show();
 
-                Intent intent = new Intent(getApplicationContext(), ReadLaterActivity.class);
-//                intent.putExtra("user_id", sessionManager.getUsername());
-                startActivity(intent);
+                Intent intent1 = new Intent(getApplicationContext(), ReadLaterActivity.class);
+                startActivity(intent1);
+
+                return true;
+            case R.id.home_app_bar_profile:
+                Intent intent2 = new Intent(getApplicationContext(), ProfileActivity.class);
+                startActivity(intent2);
 
                 return true;
             default:
@@ -162,13 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 articlesItemAction.goToDetail(articlesItemDB);
             }
         }, TAG);
-
-//        articlesAdapter.setListener(new ArticlesAdapter.ClickListener() {
-//            @Override
-//            public void onItemClick(ArticlesItemDB articlesItemDB) {
-//                Toast.makeText(getApplicationContext(), "selected " + articlesItemDB.getTitle(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         rvArticles.setAdapter(articlesAdapter);
         rvArticles.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

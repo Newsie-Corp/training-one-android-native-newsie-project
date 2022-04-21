@@ -1,5 +1,6 @@
 package com.akv.newsie.Activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -50,17 +51,46 @@ public class ReadLaterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_later);
-//        articlesItemsDB = ArticlesItemDB.generateArticleList();
         rvArticles = findViewById(R.id.rv_readlater_list);
         sessionManager = new SessionManager(this);
 
-//        String dataString = getIntent().getStringExtra("dataString");
-//        int dataInt = getIntent().getIntExtra("dataInt", 0);
-//        double dataDouble = getIntent().getDoubleExtra("dataDouble", 0);
+        initRvData();
 
+        SearchView searchBtn = findViewById(R.id.sv_rl_btn);
+        filterFunction(searchBtn);
+    }
+
+    public void initAdapter() {
+        articlesItemAction = new ArticlesItemAction(getApplicationContext());
+
+        articlesAdapter = new ArticlesAdapter(getApplicationContext(), articlesItemsDB, new ArticlesAdapter.ClickListener() {
+            @Override
+            public void onItemClick(ArticlesItemDB articlesItemsDB) {
+                articlesItemAction.goToDetail(articlesItemsDB);
+            }
+        }, TAG);
+
+        articlesAdapter.setCallback(new ArticlesAdapter.Callback() {
+            @Override
+            public void onRefreshItem() {
+                initRvData();
+            }
+
+            @Override
+            public void onDeletePressed(ArticlesItemDB articlesItemDB) {
+                deleteConfirmation(articlesItemDB);
+            }
+
+
+        });
+
+        rvArticles.setAdapter(articlesAdapter);
+        rvArticles.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+    }
+
+    public void initRvData() {
         try {
-
-//            articlesItemsJSON = ArticlesItemJSON.generateArticleList();
 
             database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "newsie-db")
                     .allowMainThreadQueries()
@@ -80,68 +110,53 @@ public class ReadLaterActivity extends AppCompatActivity {
                     articlesItemsIds[i] = userBookmarksDB.get(i).getArticleId();
                 }
 
-                for (int i = 0; i < userBookmarksDB.size(); i++) {
-                    Log.d(TAG, "userBookmarksDB i " + i + " " + userBookmarksDB.get(i).toString());
-                    Log.d(TAG, "articlesItemsIds i " + i + " " + articlesItemsIds[i]);
-                }
-
                 articlesItemsDB = articlesItemsDao.getAllById(articlesItemsIds);
-                for (int i = 0; i < articlesItemsDB.size(); i++) {
-                    Log.d(TAG, "articlesItemsDB i " + i + " " + articlesItemsDB.get(i).toString());
-                }
 
                 initAdapter();
             } else {
                 Toast.makeText(getApplicationContext(), "No news to be read later currently", Toast.LENGTH_SHORT).show();
+                onBackPressed();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG, e.toString());
         }
-
-        SearchView searchBtn = findViewById(R.id.sv_rl_btn);
-        filterFunction(searchBtn);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_read_later, menu);
-//        filterFunction(menu);
-//        return true;
-//    }
-
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//        startActivity(intent);
-//    }
-
-    public void initAdapter() {
-        articlesItemAction = new ArticlesItemAction(getApplicationContext());
-
-        articlesAdapter = new ArticlesAdapter(getApplicationContext(), articlesItemsDB, new ArticlesAdapter.ClickListener() {
+    public void deleteConfirmation(ArticlesItemDB articlesItemDB) {
+        android.app.AlertDialog.Builder ab = new android.app.AlertDialog.Builder(this);
+        ab.setTitle("Delete");
+        ab.setMessage("Are you Sure want to delete this news?");
+        ab.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
-            public void onItemClick(ArticlesItemDB articlesItemsDB) {
-//                Toast.makeText(getApplicationContext(), "selected " + articlesItemsDB.getTitle(), Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), DetailNewsActivity.class);
-//                intent.putExtra("id", articlesItemsDB.getArticleId());
-                articlesItemAction.goToDetail(articlesItemsDB);
+            public void onClick(DialogInterface dialog, int which) {
+
+                String message = "deleting article " + articlesItemDB.getArticleId() + " from read later";
+                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+
+                UserArticlesCrossRefDB userArticlesCrossRefDB
+                        = userBookmarksDao.getByArticleItemsIdAndUserId(
+                        articlesItemDB.getArticleId(),
+                        sessionManager.getUsername());
+                userBookmarksDao.deleteUserBookmarks(userArticlesCrossRefDB);
+
+                userBookmarksDB = userBookmarksDao.getAll();
+//                        callback.onRefreshItem();
+                Log.d(TAG, "userBookmarkDB " + userBookmarksDB.size() + " " + userBookmarksDB.toString());
+                dialog.dismiss();
+                initRvData();
 
             }
-        }, TAG);
+        });
+        ab.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-//        articlesAdapter.setListener(new ArticlesAdapter.ClickListener() {
-//            @Override
-//            public void onItemClick(ArticlesItemDB articlesItemsDB) {
-//                Toast.makeText(getApplicationContext(), "selected " + articlesItemsDB.getTitle(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        rvArticles.setAdapter(articlesAdapter);
-        rvArticles.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
+        ab.show();
     }
 
     public void filterFunction(SearchView searchView) {

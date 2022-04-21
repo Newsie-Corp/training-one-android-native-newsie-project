@@ -6,34 +6,35 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    tools:context=".Activity.LoginActivity">
+    tools:context=".Activity.ProfileActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="156dp"
-        android:layout_height="99dp"
+    <ImageView
+        android:id="@+id/iv_pp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/newspaper_icon"
+        android:background="@drawable/pp_icon"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="username"
+            android:text="Full Name"
             android:layout_gravity="center_vertical"
-            tools:ignore="MissingConstraints" />
+            android:layout_weight="1"/>
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_fullname"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            tools:ignore="MissingConstraints" />
+            android:layout_gravity="center_vertical"
+            android:layout_weight="7"/>
 
     </LinearLayout>
 
@@ -45,24 +46,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="password"
-            tools:ignore="MissingConstraints"
-            android:layout_gravity="center_vertical" />
+            android:text="Email"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10pt"
-            android:inputType="textPassword"
-            tools:ignore="MissingConstraints"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="4"/>
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="login" />
-
 
 </LinearLayout>
