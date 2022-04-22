@@ -72,23 +72,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
         this.currentActivity = currentActivity;
     }
 
-    public List<ArticlesItemDB> getPresidentList() {
-        return articleList;
-    }
-
-    public void setPresidentList(List<ArticlesItemDB> articleList) {
-        this.articleList = articleList;
-        this.articleListFiltered = new ArrayList<>(articleList);
-    }
-
-    public ClickListener getListener() {
-        return listener;
-    }
-
-    public void setListener(ClickListener listener) {
-        this.listener = listener;
-    }
-
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -218,7 +201,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
             String filterPattern = "";
             try {
 
-                if (articleList.size() == 0) {
+                if (articleListFiltered.size() == 0) {
                     Toast.makeText(context, "No saved News", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -242,8 +225,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
                         });
                     }
                 }
-                Log.d(TAG, "ArticlesItemDB List Filter: " + articleListFiltered);
-                Log.d(TAG, "ArticlesItemDB List Filter size: " + articleListFiltered.size());
 
             } catch (Exception e) {
                 e.printStackTrace();
