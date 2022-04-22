@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +28,7 @@ import com.akv.newsie.Model.JSON.Articles.ArticlesResponseJSON;
 import com.akv.newsie.R;
 import com.akv.newsie.Util.AppDatabase;
 import com.akv.newsie.Util.SessionManager;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             userBookmarksDao = database.userBookmarksDao();
 
             articlesItemsDB = articlesItemDao.getAll();
-            if(articlesItemsDB.size() == 0) {
+            if (articlesItemsDB.size() == 0) {
                 articlesItemConverter = new ArticlesItemConverter();
                 newsRetrofitInstance.getAPI().getResponseByKeyword("Apple", NewsAPIEndPoint.API_KEY).enqueue(new Callback<ArticlesResponseJSON>() {
                     @Override
@@ -113,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.home_app_bar_bookmarks:
-                Toast.makeText(getApplicationContext(), "going to read later page", Toast.LENGTH_LONG).show();
-
                 Intent intent1 = new Intent(getApplicationContext(), ReadLaterActivity.class);
                 startActivity(intent1);
 
@@ -157,9 +155,9 @@ public class MainActivity extends AppCompatActivity {
     public void initAdapter() {
         articlesItemAction = new ArticlesItemAction(getApplicationContext());
 
-        if(articlesItemsDB.size() == 0)
-            Toast.makeText(getApplicationContext(), "No News Currently", Toast.LENGTH_SHORT).show();
-
+        if (articlesItemsDB.size() == 0)
+//            Toast.makeText(getApplicationContext(), "No News Currently", Toast.LENGTH_SHORT).show();
+            articlesItemAction.showSnackbar(rvArticles, "No News Currently", Snackbar.LENGTH_LONG);
         articlesAdapter = new ArticlesAdapter(getApplicationContext(), articlesItemsDB, new ArticlesAdapter.ClickListener() {
             @Override
             public void onItemClick(ArticlesItemDB articlesItemDB) {

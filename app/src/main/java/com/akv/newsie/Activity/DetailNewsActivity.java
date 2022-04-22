@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
@@ -21,7 +20,11 @@ import com.akv.newsie.R;
 import com.akv.newsie.Util.AppDatabase;
 import com.akv.newsie.Util.SessionManager;
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class DetailNewsActivity extends AppCompatActivity {
@@ -42,7 +45,7 @@ public class DetailNewsActivity extends AppCompatActivity {
 
     private TextView articleTitle;
     private TextView articleAuthor;
-    private TextView articleShortDescription;
+    //    private TextView articleShortDescription;
     private TextView artcilePublishedAt;
     private TextView articleContent;
     private ImageView articleImage;
@@ -54,11 +57,13 @@ public class DetailNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_news);
 
         sessionManager = new SessionManager(this);
+        articlesItemAction = new ArticlesItemAction(this);
         int[] articlesItemsIds = new int[1];
         articlesItemsIds[0] = getIntent().getIntExtra("articlesId", -1);
 
         if (articlesItemsIds[0] == -1)
-            Toast.makeText(this, "Invalid action", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Invalid action", Toast.LENGTH_SHORT).show();
+            articlesItemAction.showSnackbar(articleTitle, "Invalid action", Snackbar.LENGTH_LONG);
 
         try {
             database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "newsie-db")
@@ -82,19 +87,32 @@ public class DetailNewsActivity extends AppCompatActivity {
         artcilePublishedAt = findViewById(R.id.tv_art_pa);
         articleImage = (ImageView) findViewById(R.id.iv_art_content_img);
         actionIcon = (ImageView) findViewById(R.id.iv_art_plus_ic);
-        articleShortDescription = findViewById(R.id.tv_art_short_desc);
+//        articleShortDescription = findViewById(R.id.tv_art_short_desc);
         articleContent = findViewById(R.id.tv_art_content_prev);
 
+        String publishedDate = null;
+        Date date = null;
+
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(articlesItemDB.getPublishedAt());
+            publishedDate = "published on " + new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss aaa").format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         articleTitle.setText(articlesItemDB.getTitle());
-        articleAuthor.setText(articlesItemDB.getAuthor());
-        artcilePublishedAt.setText(articlesItemDB.getPublishedAt());
+        articleAuthor.setText("written by " + articlesItemDB.getAuthor());
+        artcilePublishedAt.setText(publishedDate);
         articleImage.setImageResource(R.drawable.news_icon);
+//        articleShortDescription.setText(articlesItemDB.getDescription());
+        articleContent.setText(articlesItemDB.getContent());
         actionIcon.setImageResource(R.drawable.plus_icon);
         actionIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "adding article " + articlesItemDB.getArticleId() + " to read later";
-                Toast.makeText(DetailNewsActivity.this, message, Toast.LENGTH_SHORT).show();
+                String message = "added article " + articlesItemDB.getTitle() + " to read later";
+//                Toast.makeText(DetailNewsActivity.this, message, Toast.LENGTH_SHORT).show();
+                articlesItemAction.showSnackbar(actionIcon, message, Snackbar.LENGTH_SHORT);
                 UserArticlesCrossRefDB userArticlesCrossRefDB = new UserArticlesCrossRefDB();
                 userArticlesCrossRefDB.setArticleId(articlesItemDB.getArticleId());
                 userArticlesCrossRefDB.setUserId(sessionManager.getUsername());
@@ -105,8 +123,6 @@ public class DetailNewsActivity extends AppCompatActivity {
 
             }
         });
-        articleShortDescription.setText(articlesItemDB.getDescription());
-        articleContent.setText(articlesItemDB.getContent());
 
         Glide.with(this).load(articlesItemDB.getUrlToImage()).into(articleImage);
 

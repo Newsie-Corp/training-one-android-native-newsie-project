@@ -3,7 +3,6 @@ package com.akv.newsie.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -23,6 +22,7 @@ import com.akv.newsie.Model.JSON.Articles.ArticlesItemJSON;
 import com.akv.newsie.R;
 import com.akv.newsie.Util.AppDatabase;
 import com.akv.newsie.Util.SessionManager;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -114,7 +114,8 @@ public class ReadLaterActivity extends AppCompatActivity {
 
                 initAdapter();
             } else {
-                Toast.makeText(getApplicationContext(), "No news to be read later currently", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "No saved News", Toast.LENGTH_SHORT).show();
+                articlesItemAction.showSnackbar(rvArticles, "No saved News", Snackbar.LENGTH_LONG);
                 onBackPressed();
             }
 
@@ -132,9 +133,9 @@ public class ReadLaterActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                String message = "deleting article " + articlesItemDB.getArticleId() + " from read later";
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-
+                String message = "deleted article " + articlesItemDB.getTitle() + " from read later";
+//                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                articlesItemAction.showSnackbar(rvArticles, message, Snackbar.LENGTH_LONG);
                 UserArticlesCrossRefDB userArticlesCrossRefDB
                         = userBookmarksDao.getByArticleItemsIdAndUserId(
                         articlesItemDB.getArticleId(),

@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:gravity="center_vertical"
     android:orientation="vertical"
+    android:padding="30dp"
     tools:context=".Activity.LoginActivity">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="156dp"
-        android:layout_height="99dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="20dp"
         android:background="@drawable/news_icon"
         tools:ignore="MissingConstraints" />
 
@@ -24,8 +26,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="username"
             android:layout_gravity="center_vertical"
+            android:text="username"
             tools:ignore="MissingConstraints" />
 
         <EditText
@@ -45,17 +47,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="password"
-            tools:ignore="MissingConstraints"
-            android:layout_gravity="center_vertical" />
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="10pt"
             android:inputType="textPassword"
-            tools:ignore="MissingConstraints"/>
+            android:textSize="10pt"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
 
     <Button
@@ -63,6 +65,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="login" />
-
 
 </LinearLayout>

@@ -30,8 +30,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder> implements Filterable {
@@ -97,10 +100,20 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
     public void onBindViewHolder(@NonNull Holder holder, @SuppressLint("RecyclerView") int position) {
         ArticlesItemDB article = articleList.get(position);
 
+        String publishedDate = null;
+        Date date = null;
+
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(article.getPublishedAt());
+            publishedDate = "on " + new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss aaa").format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Log.d(TAG, "ArticlesItemDB is " + article.toString());
         holder.articleTitle.setText(article.getTitle());
-        holder.articleAuthor.setText(article.getAuthor());
-        holder.artcilePublishedAt.setText(article.getPublishedAt());
+        holder.articleAuthor.setText("by " + article.getAuthor());
+        holder.artcilePublishedAt.setText(publishedDate);
         holder.articleImage.setImageResource(R.drawable.news_icon);
 
         if (currentActivity.equals(MainActivity.TAG)) {
@@ -109,8 +122,9 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
                 @Override
                 public void onClick(View v) {
                     if (position != RecyclerView.NO_POSITION) {
-                        String message = "adding article " + article.getArticleId() + " to read later";
-                        showSnackbar(v, message, Snackbar.LENGTH_LONG);
+                        String message = "adding article " + article.getTitle() + " to read later";
+                        articlesItemAction.showSnackbar(v, message, Snackbar.LENGTH_LONG);
+//                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 
                         UserArticlesCrossRefDB userArticlesCrossRefDB = new UserArticlesCrossRefDB();
                         userArticlesCrossRefDB.setArticleId(article.getArticleId());
@@ -165,8 +179,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        String message = "Getting to article " + articleTitle.getText();
-                        showSnackbar(v, message, Snackbar.LENGTH_LONG);
+//                        String message = "Getting to article " + articleTitle.getText();
+//                        articlesItemAction.showSnackbar(v, message, Snackbar.LENGTH_LONG);
                         articlesItemAction.goToDetail(articleList.get(position));
                     }
                 }
@@ -251,9 +265,4 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Holder
             return null;
         }
     }
-
-    public void showSnackbar(View view, String message, int duration) {
-        Snackbar.make(view, message, duration).show();
-    }
-
 }
