@@ -33,6 +33,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800752085232:android:90317fd9be12fc10c53a35",
+        "android_client_info": {
+          "package_name": "com.akv.newsiebuild"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800752085232-5uq1c3pm0v3judksotad0q5bi5n83q0q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl4z5cqe4n7zd7Ke7XYQNtj6cXiTebJQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800752085232-5uq1c3pm0v3judksotad0q5bi5n83q0q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
