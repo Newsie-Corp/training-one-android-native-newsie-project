@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "";
+    private static final String TAG = "LoginActivity";
     private EditText username;
     private EditText password;
     private Button buttonLogin;
@@ -58,18 +58,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
 
-        if(view == buttonLogin){
+        if (view == buttonLogin) {
             String user = username.getText().toString();
             String pass = password.getText().toString();
 
-            final ProgressDialog loading = ProgressDialog.show(this,"Logging You In...","Please wait...",false,false);
+            final ProgressDialog loading = ProgressDialog.show(this, "Logging You In...", "Please wait...", false, false);
             //Creating a string request
             StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             String respStatus = "";
-                            try{
+                            try {
                                 JSONObject obj = new JSONObject(response);
                                 String status = obj.getString("status");
                                 String email = obj.getJSONObject("data").getString("email");
@@ -77,8 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 String fullname = obj.getJSONObject("data").getString("full_name");
                                 respStatus = status;
 
-
-                                if(respStatus.equals(true)){
+                                if (respStatus.equals("false")) {
 
                                     loading.dismiss();
                                     //If the server response is not success
@@ -106,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     finish();
                                     sessionManager.createSession(username, fullname, email);
                                 }
-                            }catch (JSONException e){
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
@@ -121,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.d(TAG, "onErrorResponse: " + error.toString());
                             Toast.makeText(LoginActivity.this, "Cek koneksi internet Anda.", Toast.LENGTH_LONG).show();
                         }
-                    }){
+                    }) {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
@@ -132,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String> params = new HashMap<>();
+                    Map<String, String> params = new HashMap<>();
                     //Adding parameters to request
                     params.put("username", user);
                     params.put("password", pass);
